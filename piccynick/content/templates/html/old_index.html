@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>schizzz</title>
+    <style>
+        img , video{
+            max-width: 500px;
+            max-height: 500px;
+            display: block;
+            margin-bottom: 10px;
+        }
+        .header {
+            margin-bottom: 50px;
+        }
+        body {
+            margin-left: 80px;
+        }
+        .timestamp {
+            font-size: small;
+            text-transform: lowercase;
+        }
+    </style>
+</head>
+<body>
+    <h1>schizzz shiit</h1>
+    <div class = "header">
+    <p>they call me nick 'danger' dimitrov a.k.a blu$pirit. this is my wall where i post whenever i feel like i have something to share</p>
+    <p>feel free to download, share and use anything on here</p>
+    <p>if you like what you see, and you wanna show me love.. <a href="">buy me a coffee </a></p>
+</div>
+    {% for image in images %}
+    
+    <hr>
+        <p class = "timestamp">{{image.created_at}}</p>
+        {% if image.image %}
+        <a href="{{ image.image.url }}"> <img src="{{ image.image.url }}" alt="Uploaded Image"></a>
+        {% endif %}
+        
+        {% if image.text %}
+        <p> {{image.text|linebreaks}}</p>
+        {% endif %}
+
+        {% if image.video %}
+            <video controls>
+                <source src="{{ image.video.url }}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        {% endif %}
+    {% empty %}
+        <p>No images uploaded yet.</p>
+    {% endfor %}
+
+</body>
+</html>
+

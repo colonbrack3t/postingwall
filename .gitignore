@@ -1,0 +1,52 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+env/
+*.env
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Django-related files
+*.sqlite3
+db.sqlite3
+*.log
+*.pot
+*.pyc
+*.pyo
+*.pyd
+*.swp
+
+# Media and static files
+/media/
+MEDIA/
+staticfiles/
+static/
+*.svg
+*.png
+*.jpg
+*.jpeg
+*.gif
+
+# Ignore uploaded files (optional, if you don't want media files in git)
+uploads/
+
+# Environment settings and secrets
+.env
+config/settings/local.py
+config/settings/*.local.py
+
+# IDE / Editor files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# macOS files
+.DS_Store
+
+# Windows files
+Thumbs.db

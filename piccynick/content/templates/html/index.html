@@ -1,0 +1,121 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>schizz</title>
+    <style>
+        img, video {
+            max-width: 300px;
+            max-height: 300px;
+            display: block;
+            margin-bottom: 10px;
+        }
+        #loading {
+            text-align: center;
+            font-size: 18px;
+            display: none;
+        }
+        .text-entry {
+            max-width: 300px;
+            white-space: pre-wrap; /* Keeps multiline formatting */
+
+            padding: 5px;
+            margin-bottom: 10px;
+        }
+        .header {
+            margin-bottom: 50px;
+        }
+        body {
+            margin-left: 80px;
+        }
+        .timestamp {
+            font-size: small;
+            text-transform: lowercase;
+        }
+    </style>
+</head>
+<body>
+        <h1>schizzz shiit</h1>
+        <div class = "header">
+        <p>they call me nick 'danger' dimitrov a.k.a blu$pirit. this is my wall where i post whenever i feel like i have something to share</p>
+        <p>feel free to download, share and use anything on here</p>
+        <p>if you like what you see, and you wanna show me love.. <a href="">buy me a coffee </a></p>
+    </div>
+
+    <div id="media-container"></div>
+
+    <p id="loading"></p>
+
+    <script>
+        let page = 1;
+        let loading = false;
+
+        function loadMore() {
+            if (loading) return;
+            loading = true;
+            document.getElementById('loading').style.display = 'block';
+
+            fetch(`/load-more/?page=${page}`)
+                .then(response => response.json())
+                .then(data => {
+                    const container = document.getElementById('media-container');
+
+                    if (data.media.length === 0) {
+                        //document.getElementById('loading').innerText = 'No more items to load';
+                        return;
+                    }
+
+                    data.media.forEach(item => {
+                        container.appendChild(document.createElement('hr')) 
+                        const timestamp = document.createElement('div')
+                        timestamp.textContent = item.created_at
+                        timestamp.className = 'timestamp';
+
+                        container.appendChild(timestamp)
+                        if (item.text) {
+                            const textDiv = document.createElement('div');
+                            textDiv.className = 'text-entry';
+                            textDiv.textContent = item.text;
+                            container.appendChild(textDiv);
+                        }
+                        if (item.image_url) {
+                            const img = document.createElement('img');
+                            img.src = item.image_url;
+                            img.alt = 'Uploaded Image';
+                            container.appendChild(img);
+                        }
+                        if (item.video_url) {
+                            const video = document.createElement('video');
+                            video.controls = true;
+                            video.innerHTML = `<source src="${item.video_url}" type="video/mp4">Your browser does not support the video tag.`;
+                            container.appendChild(video);
+                        }
+                    });
+
+                    page++;
+                    loading = false;
+                    document.getElementById('loading').style.display = 'none';
+                })
+                .catch(error => {
+                    console.error('Error loading more items:', error);
+                    loading = false;
+                    document.getElementById('loading').style.display = 'none';
+                });
+        }
+
+        window.addEventListener('scroll', () => {
+            if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100) {
+                loadMore();
+                console.log("bottom")
+            }
+        });
+
+        // Load the first 10 items on page load
+        loadMore();
+    </script>
+
+</body>
+</html>
