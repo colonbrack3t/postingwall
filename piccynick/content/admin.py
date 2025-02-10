@@ -1,6 +1,12 @@
 from django.contrib import admin
-from .models import MyImageModel
+from .models import *
+
+
 
 @admin.register(MyImageModel)
 class MyImageModelAdmin(admin.ModelAdmin):
-    list_display = ('id', 'image', 'text', 'created_at')
+    list_display = ('id', 'publish','image', 'text', 'created_at')
+
+@admin.register(SiteInfo)
+class SiteInfoAdmin(admin.ModelAdmin):
+    list_display = ('id', 'title')

@@ -5,23 +5,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>schizz</title>
-    <style>
+    <title>{{siteInfo.title}}</title>
+    <style  >
         img, video {
-            max-width: 300px;
-            max-height: 300px;
+            max-width: 500px;
+            max-height: 500px;
             display: block;
             margin-bottom: 10px;
         }
+        
         #loading {
             text-align: center;
             font-size: 18px;
             display: none;
         }
         .text-entry {
-            max-width: 300px;
+            max-width: 500px;
             white-space: pre-wrap; /* Keeps multiline formatting */
-
+    
             padding: 5px;
             margin-bottom: 10px;
         }
@@ -35,15 +36,26 @@
             font-size: small;
             text-transform: lowercase;
         }
+
+        .authortag {
+            font-size: small;
+         
+        }
     </style>
 </head>
 <body>
-        <h1>schizzz shiit</h1>
+        <h1>{{siteInfo.title}}</h1>
         <div class = "header">
-        <p>they call me nick 'danger' dimitrov a.k.a blu$pirit. this is my wall where i post whenever i feel like i have something to share</p>
+            {{siteInfo.headertext |safe}}
+        </div>
+        <!-- <div class = "header">
+        <p>they call me nick 'danger' dimitrov a.k.a blu$pirit a.k.a DJ Meatrov. this is my wall where i post whenever i feel like i have something to share</p>
         <p>feel free to download, share and use anything on here</p>
         <p>if you like what you see, and you wanna show me love.. <a href="">buy me a coffee </a></p>
-    </div>
+
+        <br>
+        <p>the code for this site is was made by ludo a.k.a lil lud a.k.a the italian stallion. all the code is open source <a href="https://github.com/colonbrack3t/postingwall">here</a></p>
+    </div> -->
 
     <div id="media-container"></div>
 
@@ -78,7 +90,7 @@
                         if (item.text) {
                             const textDiv = document.createElement('div');
                             textDiv.className = 'text-entry';
-                            textDiv.textContent = item.text;
+                            textDiv.innerHTML = item.text;
                             container.appendChild(textDiv);
                         }
                         if (item.image_url) {
@@ -93,6 +105,11 @@
                             video.innerHTML = `<source src="${item.video_url}" type="video/mp4">Your browser does not support the video tag.`;
                             container.appendChild(video);
                         }
+                        const authortag = document.createElement('div')
+                        authortag.textContent = item.author
+                        authortag.className = 'authortag';
+
+                        container.appendChild(authortag)
                     });
 
                     page++;
